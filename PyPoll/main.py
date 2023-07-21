@@ -3,13 +3,11 @@
 import os
 import csv
 
-# Prompt user for title lookup
-
 # Set path for file
 csvpath = os.path.join("Resources", "election_data.csv")
 txtpath = os.path.join("analysis", "election_analysis.txt")
 
-#varailbe
+#varaibles
 total_votes = 0
 l_candidates = []
 d_candidates = {}
@@ -22,23 +20,24 @@ with open(csvpath, encoding='UTF-8') as csvfile:
     first = next(csvreader)
     for row in csvreader:
         total_votes += 1
-
+#filling list and dictionary of candidates
         if row[2] not in l_candidates:
             l_candidates.append(row[2])
             d_candidates[row[2]] = 0
         d_candidates[row[2]] += 1
 
-
+#setting up the output
 output = (
     f"Election Analysis\n"
     f"--------------------------\n"
     f"Total Votes: {total_votes}\n"
     f"--------------------------\n"
-   
-)        
-print(output)
+)
+#more output and adding it all to the textfile
 with open(txtpath, "w") as txtfile:
-    txtfile.write(output)
+    txtfile.write(output) 
+    print(output)
+   
 
     for x in l_candidates:
         votes = d_candidates.get(x)
@@ -46,6 +45,18 @@ with open(txtpath, "w") as txtfile:
         candidate = f"{x}: {percentage:.3f}% ({votes})"
         print(candidate)
         txtfile.write(candidate)
+        if votes > l_winner[1]:
+            l_winner[0] = x
+
+    winner_output = (
+    f"--------------------------\n"
+    f"Winner: {x}"
+    )
+    print(winner_output)
+    txtfile.write(winner_output)
+
+
+
 
 
 # Election Results
