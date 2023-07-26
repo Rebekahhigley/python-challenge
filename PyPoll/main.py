@@ -42,15 +42,16 @@ with open(txtpath, "w") as txtfile:
     for x in l_candidates:
         votes = d_candidates.get(x)
         percentage = votes/total_votes*100
-        candidate = f"{x}: {percentage:.3f}% ({votes})"
+        candidate = f"{x}: {percentage:.3f}% ({votes})\n"
         print(candidate)
         txtfile.write(candidate)
         if votes > l_winner[1]:
             l_winner[0] = x
+            l_winner[1] = votes
 
     winner_output = (
     f"--------------------------\n"
-    f"Winner: {x}"
+    f"Winner: {l_winner[0]}"
     )
     print(winner_output)
     txtfile.write(winner_output)
